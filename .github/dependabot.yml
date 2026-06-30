@@ -1,0 +1,33 @@
+ version: 2
+updates:
+  - package-ecosystem: "pip"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    cooldown:
+      default-days: 7
+    registries: "*"
+    labels:
+      - "maintenance"
+      - "dependencies"
+    versioning-strategy: increase-if-necessary
+    groups:
+      dev-deps:
+        patterns:
+        - "pytest*"
+        - "mypy"
+        - "requests-mock"
+
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    cooldown:
+      default-days: 7
+    labels:
+      - "maintenance"
+      - "dependencies"
+    groups:
+       actions:
+          patterns:
+            - "*"

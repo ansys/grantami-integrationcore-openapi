@@ -1,0 +1,2044 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "MaterialModelService.WebApi",
+    "version": "1.0"
+  },
+  "paths": {
+    "/v1/databases": {
+      "get": {
+        "tags": [
+          "Databases"
+        ],
+        "summary": "List all MI databases",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetDatabasesResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetDatabasesResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetDatabasesResponse"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/modelDefinitions/{id}": {
+      "get": {
+        "tags": [
+          "ModelDefinitions"
+        ],
+        "summary": "Get model definition based on id.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "examples": {
+              "B-H curve": {
+                "summary": "B-H curve",
+                "description": "Example containing a property with multiple candidate attributes",
+                "value": "b.h.curve"
+              },
+              "Chemical resistance": {
+                "summary": "Chemical resistance",
+                "description": "Example with multiple properties",
+                "value": "chemical.resistance"
+              },
+              "Density with temperature": {
+                "summary": "Density with temperature",
+                "description": "Example with a property with a free parameter",
+                "value": "density.with.temp"
+              },
+              "Electrical conductivity with temperature": {
+                "summary": "Electrical conductivity with temperature",
+                "description": "Example with a property with a free parameter",
+                "value": "electrical.conductivity.with.temp"
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/MaterialModelDefinition"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MaterialModelDefinition"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MaterialModelDefinition"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/modelDefinitions": {
+      "get": {
+        "tags": [
+          "ModelDefinitions"
+        ],
+        "summary": "Get model definitions.",
+        "parameters": [
+          {
+            "name": "resolvableOnly",
+            "in": "query",
+            "description": "If true, only MMDs that are fully resolvable in at least one database will be returned.\r\nFor a model definition to be considered resolvable it needs to have valid standard name mappings for all properties and parameters in at least one database.",
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 1
+            }
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 100
+            }
+          },
+          {
+            "name": "MMS-Package",
+            "in": "header",
+            "description": "If specified, MMDs that are restricted to this package and MMDs with no package restrictions will be returned.\n\r\nIf not specified, only MMDs with no package restrictions will be returned.\n\r\nSet to 'ALL' to get all MMDs regardless of package restrictions.\n",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetModelDefinitionsResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetModelDefinitionsResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetModelDefinitionsResponse"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/modelDefinitionAttributes": {
+      "get": {
+        "tags": [
+          "ModelDefinitions"
+        ],
+        "summary": "Get attribute names and GUIDs for MMDs in a given table.",
+        "parameters": [
+          {
+            "name": "tableGuid",
+            "in": "query",
+            "description": "The table's GUID",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "example": "0000dd92-0011-4fff-8fff-0000ffff0000"
+          },
+          {
+            "name": "databaseKey",
+            "in": "query",
+            "description": "The database key",
+            "schema": {
+              "type": "string"
+            },
+            "example": "MI_Starter_Data"
+          },
+          {
+            "name": "mmdIds",
+            "in": "query",
+            "description": "A list of MMD IDs to resolve. If not provided, all resolvable MMDs will be included. If an MMD cannot be resolved, it will not be included in the results.",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "examples": {
+              "All examples": {
+                "summary": "All examples",
+                "description": "Include all example MMDs.",
+                "value": ["b.h.curve","chemical.resistance","density.with.temp","electrical.conductivity.with.temp"]
+              },
+              "B-H curve": {
+                "summary": "B-H curve",
+                "description": "Example containing a property with multiple candidate attributes",
+                "value": ["b.h.curve"]
+              },
+              "Chemical resistance": {
+                "summary": "Chemical resistance",
+                "description": "Example with multiple properties",
+                "value": ["chemical.resistance"]
+              },
+              "Density with temperature": {
+                "summary": "Density with temperature",
+                "description": "Example with a property with a free parameter",
+                "value": ["density.with.temp"]
+              },
+              "Electrical conductivity with temperature": {
+                "summary": "Electrical conductivity with temperature",
+                "description": "Example with a property with a free parameter",
+                "value": ["electrical.conductivity.with.temp"]
+              }
+            }
+          },
+          {
+            "name": "MMS-Package",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/MaterialModelDefinitionResolvedAttributesResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MaterialModelDefinitionResolvedAttributesResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MaterialModelDefinitionResolvedAttributesResponse"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/models/export": {
+      "get": {
+        "tags": [
+          "Models"
+        ],
+        "summary": "Get material models (without user constraints).",
+        "parameters": [
+          {
+            "name": "recordHistoryGuids",
+            "in": "query",
+            "description": "The record history GUIDS to export models for.",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "format": "uuid"
+              }
+            },
+            "examples": {
+              "Steels": {
+                "summary": "Steels",
+                "description": "Export all applicable MMDs for some example steels from the MI Starter Data database.",
+                "value": ["21e804b8-554f-42a1-836a-940dee451a7e","d9423920-c91e-4b0b-93df-820057bae1bb","acb65b26-ec52-4498-9a3b-d1345a82d133"]
+              },
+              "Metals with temperature dependent properties": {
+                "summary": "Metals with temperature dependent properties",
+                "description": "Export all applicable MMDs for some example metals from the MI Starter Data database. These have several attributes with temperature dependent data, including electrical conductivity.",
+                "value": ["7402328a-8da6-4a37-a5a8-0e475bdeafe9","316ec25a-a7fd-4ce3-8c25-52fd18140b11"]
+              }
+            }
+          },
+          {
+            "name": "databaseKey",
+            "in": "query",
+            "description": "The database to export from.",
+            "schema": {
+              "type": "string"
+            },
+            "example": "MI_Starter_Data"
+          },
+          {
+            "name": "mmdIds",
+            "in": "query",
+            "description": "The MMD IDs to export models for. If empty, all resolvable MMDs will be used.",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "examples": {
+              "All examples": {
+                "summary": "All examples",
+                "description": "Include all example MMDs.",
+                "value": ["b.h.curve","chemical.resistance","density.with.temp","electrical.conductivity.with.temp"]
+              },
+              "B-H curve": {
+                "summary": "B-H curve",
+                "description": "Example containing a property with multiple candidate attributes",
+                "value": ["b.h.curve"]
+              },
+              "Chemical resistance": {
+                "summary": "Chemical resistance",
+                "description": "Example with multiple properties",
+                "value": ["chemical.resistance"]
+              },
+              "Density with temperature": {
+                "summary": "Density with temperature",
+                "description": "Example with a property with a free parameter",
+                "value": ["density.with.temp"]
+              },
+              "Electrical conductivity with temperature": {
+                "summary": "Electrical conductivity with temperature",
+                "description": "Example with a property with a free parameter",
+                "value": ["electrical.conductivity.with.temp"]
+              }
+            }
+          },
+          {
+            "name": "unitSystem",
+            "in": "query",
+            "description": "The MI unit system, identified by name.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "useAbsoluteUnits",
+            "in": "query",
+            "description": "Set to true to use absolute temperature units e.g. Kelvin, otherwise use relative units e.g. Celsius.",
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          {
+            "name": "MMS-Package",
+            "in": "header",
+            "description": "If specified, MMDs that are restricted to this package, and MMDs with no package restrictions, will be used for the export.\n\r\nIf not specified, only MMDs with no package restrictions will be used for the export.\n\r\nSet to 'ALL' to use all MMDs regardless of package restrictions.\n",
+            "schema": {
+              "type": "string"
+            },
+            "example": "ALL"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ModelExportResponse"
+                },
+                "examples": {
+                  "Linear elastic isotropic isothermal": {
+                    "summary": "Linear elastic isotropic isothermal",
+                    "description": "Output of export of 'Linear elastic isotropic isothermal' model for record 'Stainless steel, 316, annealed' in the MI Starter Data database.",
+                    "value": {"materials":[{"materialName":"Stainless steel, 316, annealed","materialId":"21e804b8-554f-42a1-836a-940dee451a7e","databaseKey":"MI_Starter_Data","databaseName":"MI Starter Data","tableName":"MaterialUniverse","unitSystem":"SI (Consistent)","absoluteUnits":true,"exportDateTime":"2025-01-15T10:30:00Z","traceabilityNotes":"Material data from Granta MI\r\nRecord name: Stainless steel, 216, annealed\r\nTable name: MaterialUniverse\r\nDate: 2025-01-15 (UTC)","models":[{"modelName":"Linear elastic isotropic isothermal","modelId":"linear-elasticity-isotropic-isothermal","constraints":[{"name":"Temperature","numericValue":21,"unit":"\u00B0C"}],"properties":[{"name":"Linear elastic isotropic isothermal","columns":[{"name":"Young\u0027s modulus","symbol":"E","unit":"GPa","isFreeParameter":false,"numericValues":[195.4]},{"name":"Poisson\u0027s Ratio","symbol":"\u03BD","isFreeParameter":false,"numericValues":[0.2]}]}]}]}],"issues":{}}
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ModelExportResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ModelExportResponse"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Models"
+        ],
+        "summary": "Get material models.",
+        "parameters": [
+          {
+            "name": "MMS-Package",
+            "in": "header",
+            "description": "If specified, MMDs that are restricted to this package and MMDs with no package restrictions will be used for the export.\n\r\nIf not specified, only MMDs with no package restrictions will be used for the export.\n\r\nSet to 'ALL' to use all MMDs regardless of package restrictions.\n",
+            "schema": {
+              "type": "string"
+            },
+            "example": "ALL"
+          }
+        ],
+        "requestBody": {
+          "description": "The request object. At least one record history GUID must be included, all other properties are optional.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ModelExportRequest"
+              },
+              "examples": {
+                "Steels": {
+                  "summary": "Steels",
+                  "description": "Export all applicable MMDs for some example steels from the MI Starter Data database.",
+                  "value": {"recordHistoryGuids":["21e804b8-554f-42a1-836a-940dee451a7e","d9423920-c91e-4b0b-93df-820057bae1bb","acb65b26-ec52-4498-9a3b-d1345a82d133"],"databaseKey":"MI_Starter_Data"}
+                },
+                "Electrical conductivity with temperature": {
+                  "summary": "Electrical conductivity with temperature",
+                  "description": "Export all applicable MMDs for some materials with populated 'Electrical conductivity with temperature' attributes from the MI Starter Data database. For MMDs with user-defined temperature constraints, 273.16K will be used.",
+                  "value": {"recordHistoryGuids":["7402328a-8da6-4a37-a5a8-0e475bdeafe9","316ec25a-a7fd-4ce3-8c25-52fd18140b11"],"databaseKey":"MI_Starter_Data","constraintValues":[{"name":"Temperature","numericValue":273.16,"unit":"K"}]}
+                }
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ModelExportRequest"
+              },
+              "examples": {
+                "Steels": {
+                  "summary": "Steels",
+                  "description": "Export all applicable MMDs for some example steels from the MI Starter Data database.",
+                  "value": {"recordHistoryGuids":["21e804b8-554f-42a1-836a-940dee451a7e","d9423920-c91e-4b0b-93df-820057bae1bb","acb65b26-ec52-4498-9a3b-d1345a82d133"],"databaseKey":"MI_Starter_Data"}
+                },
+                "Electrical conductivity with temperature": {
+                  "summary": "Electrical conductivity with temperature",
+                  "description": "Export all applicable MMDs for some materials with populated 'Electrical conductivity with temperature' attributes from the MI Starter Data database. For MMDs with user-defined temperature constraints, 273.16K will be used.",
+                  "value": {"recordHistoryGuids":["7402328a-8da6-4a37-a5a8-0e475bdeafe9","316ec25a-a7fd-4ce3-8c25-52fd18140b11"],"databaseKey":"MI_Starter_Data","constraintValues":[{"name":"Temperature","numericValue":273.16,"unit":"K"}]}
+                }
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/ModelExportRequest"
+              },
+              "examples": {
+                "Steels": {
+                  "summary": "Steels",
+                  "description": "Export all applicable MMDs for some example steels from the MI Starter Data database.",
+                  "value": {"recordHistoryGuids":["21e804b8-554f-42a1-836a-940dee451a7e","d9423920-c91e-4b0b-93df-820057bae1bb","acb65b26-ec52-4498-9a3b-d1345a82d133"],"databaseKey":"MI_Starter_Data"}
+                },
+                "Electrical conductivity with temperature": {
+                  "summary": "Electrical conductivity with temperature",
+                  "description": "Export all applicable MMDs for some materials with populated 'Electrical conductivity with temperature' attributes from the MI Starter Data database. For MMDs with user-defined temperature constraints, 273.16K will be used.",
+                  "value": {"recordHistoryGuids":["7402328a-8da6-4a37-a5a8-0e475bdeafe9","316ec25a-a7fd-4ce3-8c25-52fd18140b11"],"databaseKey":"MI_Starter_Data","constraintValues":[{"name":"Temperature","numericValue":273.16,"unit":"K"}]}
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ModelExportResponse"
+                },
+                "examples": {
+                  "Linear elastic isotropic isothermal": {
+                    "summary": "Linear elastic isotropic isothermal",
+                    "description": "Output of export of 'Linear elastic isotropic isothermal' model for record 'Stainless steel, 316, annealed' in the MI Starter Data database.",
+                    "value": {"materials":[{"materialName":"Stainless steel, 316, annealed","materialId":"21e804b8-554f-42a1-836a-940dee451a7e","databaseKey":"MI_Starter_Data","databaseName":"MI Starter Data","tableName":"MaterialUniverse","unitSystem":"SI (Consistent)","absoluteUnits":true,"exportDateTime":"2025-01-15T10:30:00Z","traceabilityNotes":"Material data from Granta MI\r\nRecord name: Stainless steel, 216, annealed\r\nTable name: MaterialUniverse\r\nDate: 2025-01-15 (UTC)","models":[{"modelName":"Linear elastic isotropic isothermal","modelId":"linear-elasticity-isotropic-isothermal","constraints":[{"name":"Temperature","numericValue":21,"unit":"\u00B0C"}],"properties":[{"name":"Linear elastic isotropic isothermal","columns":[{"name":"Young\u0027s modulus","symbol":"E","unit":"GPa","isFreeParameter":false,"numericValues":[195.4]},{"name":"Poisson\u0027s Ratio","symbol":"\u03BD","isFreeParameter":false,"numericValues":[0.2]}]}]}]}],"issues":{}}
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ModelExportResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ModelExportResponse"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/ready": {
+      "get": {
+        "tags": [
+          "Ready"
+        ],
+        "summary": "Check MI Server connection health",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/HealthResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HealthResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HealthResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/recordSearchCriteria": {
+      "get": {
+        "tags": [
+          "RecordSearchCriteria"
+        ],
+        "summary": "Construct server API search criteria for records that are applicable to all of the provided MMDs.",
+        "description": "Returns a dictionary of database key to record search criteria for that database. \n\r\nIf the returned criteria collection is empty, then that means there is no database in which all of the provided Model Definitions are resolvable.",
+        "parameters": [
+          {
+            "name": "mmdIds",
+            "in": "query",
+            "description": "The MMD IDs",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "examples": {
+              "All examples": {
+                "summary": "All examples",
+                "description": "Include all example MMDs.",
+                "value": ["b.h.curve","chemical.resistance","density.with.temp","electrical.conductivity.with.temp"]
+              },
+              "B-H curve": {
+                "summary": "B-H curve",
+                "description": "Example containing a property with multiple candidate attributes",
+                "value": ["b.h.curve"]
+              },
+              "Chemical resistance": {
+                "summary": "Chemical resistance",
+                "description": "Example with multiple properties",
+                "value": ["chemical.resistance"]
+              },
+              "Density with temperature": {
+                "summary": "Density with temperature",
+                "description": "Example with a property with a free parameter",
+                "value": ["density.with.temp"]
+              },
+              "Electrical conductivity with temperature": {
+                "summary": "Electrical conductivity with temperature",
+                "description": "Example with a property with a free parameter",
+                "value": ["electrical.conductivity.with.temp"]
+              }
+            }
+          },
+          {
+            "name": "MMS-Package",
+            "in": "header",
+            "description": "If specified, search criteria will be returned for MMDs that are restricted to this package and MMDs with no package restrictions.\n\r\nIf not specified, search criteria will only be returned for MMDs with no package restrictions.\n\r\nSet to 'ALL' to get search criteria for all MMDs regardless of package restrictions.\n",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/RecordSearchCriteriaResponse"
+                },
+                "examples": {
+                  "Density (simple)": {
+                    "summary": "Density (simple)",
+                    "description": "A simple example containing only a density property.",
+                    "value": {"criteriaByDatabaseKey":{"MI_Starter_Data":{"all":[{"all":[{"any":[{"any":[{"innerCriterion":{"type":"point"},"guid":"f581a241-c2e3-47e1-ba6e-101013070cb3","isMetaAttribute":false,"attributeCriterionType":"exists","type":"attribute"}],"type":"boolean"}],"type":"boolean"}],"type":"boolean"}],"type":"boolean"}}}
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RecordSearchCriteriaResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RecordSearchCriteriaResponse"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/recordSearchCriteria/findRecords": {
+      "post": {
+        "tags": [
+          "RecordSearchCriteria"
+        ],
+        "summary": "Find records that are applicable to all of the provided MMDs.",
+        "description": "Returns record name, record history id, record history guid and the associated database.",
+        "parameters": [
+          {
+            "name": "MMS-Package",
+            "in": "header",
+            "description": "If specified, record references will be returned for MMDs that are restricted to this package and MMDs with no package restrictions.\n\r\nIf not specified, record references will only be returned for MMDs with no package restrictions.\n\r\nSet to 'ALL' to get record references for all MMDs regardless of package restrictions.\n",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "The MMD IDs",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RecordSearchRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RecordSearchRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/RecordSearchRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/RecordSearchResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RecordSearchResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RecordSearchResponse"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/settings": {
+      "get": {
+        "tags": [
+          "Settings"
+        ],
+        "summary": "Get a API Storage configuration",
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "default": {
+            "description": "Error",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/tables/getInfo": {
+      "post": {
+        "tags": [
+          "Tables"
+        ],
+        "summary": "Get information for a list of MI tables.",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GetTablesRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GetTablesRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/GetTablesRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetTablesResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetTablesResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetTablesResponse"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/whoami": {
+      "get": {
+        "tags": [
+          "Users"
+        ],
+        "summary": "Get details of the current user.",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/WhoAmIResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/WhoAmIResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/WhoAmIResponse"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "AdditionalInformation": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "description": "The message.",
+            "nullable": true
+          },
+          "code": {
+            "type": "string",
+            "description": "The code.",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "Additional information regarding the result of an export."
+      },
+      "Attribute": {
+        "required": [
+          "standardName"
+        ],
+        "type": "object",
+        "properties": {
+          "standardName": {
+            "minLength": 1,
+            "type": "string",
+            "description": "The Standard Name of the attribute."
+          }
+        },
+        "additionalProperties": false,
+        "description": "An MI attribute"
+      },
+      "Constraint": {
+        "required": [
+          "parameter"
+        ],
+        "type": "object",
+        "properties": {
+          "parameter": {
+            "$ref": "#/components/schemas/Parameter"
+          },
+          "unit": {
+            "type": "string",
+            "description": "If MaterialModelService.Types.Constraint.ValueToUse is MaterialModelService.Types.ConstraintValueToUse.FromMmd, the unit symbol for the constraint value.",
+            "nullable": true
+          },
+          "numericValue": {
+            "type": "number",
+            "description": "If MaterialModelService.Types.Constraint.ValueToUse is MaterialModelService.Types.ConstraintValueToUse.FromMmd, the value for the constraint.",
+            "format": "double",
+            "nullable": true
+          },
+          "stringValue": {
+            "type": "string",
+            "description": "If MaterialModelService.Types.Constraint.ValueToUse is MaterialModelService.Types.ConstraintValueToUse.FromMmd and a discrete parameter is to be used, the value for the constraint.",
+            "nullable": true
+          },
+          "valueToUse": {
+            "$ref": "#/components/schemas/ConstraintValueToUse"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Used to restrict a parameter to a single value."
+      },
+      "ConstraintValue": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "The constraint parameter's Standard Name."
+          },
+          "numericValue": {
+            "type": "number",
+            "description": "The constraint's numeric value.",
+            "format": "double",
+            "nullable": true
+          },
+          "unit": {
+            "type": "string",
+            "description": "The unit for the constraint value.",
+            "nullable": true
+          },
+          "stringValue": {
+            "type": "string",
+            "description": "The constraint's string value.",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "A constraint value used to generate a model."
+      },
+      "ConstraintValueToUse": {
+        "enum": [
+          "FromMmd",
+          "UserDefined"
+        ],
+        "type": "string",
+        "description": "Specifies where a constraint value comes from."
+      },
+      "Error": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "string"
+          },
+          "message": {
+            "type": "string"
+          },
+          "details": {
+            "type": "object",
+            "additionalProperties": { },
+            "nullable": true
+          },
+          "exception": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "Standard error object"
+      },
+      "ErrorResponse": {
+        "type": "object",
+        "properties": {
+          "error": {
+            "$ref": "#/components/schemas/Error"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Standard error object for HTTP responses"
+      },
+      "ExportMaterial": {
+        "type": "object",
+        "properties": {
+          "materialName": {
+            "type": "string",
+            "description": "The material name."
+          },
+          "materialId": {
+            "type": "string",
+            "description": "The material ID (Granta MI record history GUID).",
+            "format": "uuid"
+          },
+          "databaseKey": {
+            "type": "string",
+            "description": "The key for the database the material data has come from."
+          },
+          "databaseName": {
+            "type": "string",
+            "description": "The name of the database the material data has come from."
+          },
+          "tableName": {
+            "type": "string",
+            "description": "The name of the table the material data has come from."
+          },
+          "unitSystem": {
+            "type": "string",
+            "description": "The unit system used for this export.",
+            "nullable": true
+          },
+          "absoluteUnits": {
+            "type": "boolean",
+            "description": "Indicates whether the returned data uses absolute units (e.g. Kelvin) or relative units (e.g. Celsius)."
+          },
+          "exportDateTime": {
+            "type": "string",
+            "description": "The date and time the export happened.",
+            "format": "date-time"
+          },
+          "traceabilityNotes": {
+            "type": "string",
+            "description": "Traceability information about this material."
+          },
+          "models": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/MaterialModel"
+            },
+            "description": "The models for this material."
+          }
+        },
+        "additionalProperties": false,
+        "description": "An exported material."
+      },
+      "GetDatabasesResponse": {
+        "type": "object",
+        "properties": {
+          "databases": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/MiDatabaseInfo"
+            },
+            "description": "A collection of database keys.",
+            "example": [
+              {
+                "key": "MI_FreeDataset",
+                "name": "Free Dataset (Cloud)"
+              },
+              {
+                "key": "MI_Optics_Master",
+                "name": "Optics Data"
+              }
+            ]
+          }
+        },
+        "additionalProperties": false,
+        "description": "Get databases response"
+      },
+      "GetModelDefinitionsResponse": {
+        "type": "object",
+        "properties": {
+          "materialModelDefinitions": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/MaterialModelDefinition"
+            },
+            "description": "A collection of MaterialModelService.Types.MaterialModelDefinitions."
+          },
+          "totalCount": {
+            "type": "integer",
+            "description": "The total number of MMDs that match the request parameters.",
+            "format": "int32"
+          },
+          "links": {
+            "$ref": "#/components/schemas/PaginationLinks"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Get MMDs response"
+      },
+      "GetTablesRequest": {
+        "type": "object",
+        "properties": {
+          "tables": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/MiTableIdentifier"
+            },
+            "description": "A collection of MI table information objects."
+          }
+        },
+        "additionalProperties": false,
+        "description": "Get tables request"
+      },
+      "GetTablesResponse": {
+        "type": "object",
+        "properties": {
+          "tables": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/MiTableInfo"
+            },
+            "description": "A collection of MI table information objects."
+          }
+        },
+        "additionalProperties": false,
+        "description": "Get tables response"
+      },
+      "GsaCriterion": {
+        "type": "object",
+        "additionalProperties": false
+      },
+      "HealthResponse": {
+        "type": "object",
+        "properties": {
+          "serverApiStatusCode": {
+            "$ref": "#/components/schemas/HttpStatusCode"
+          }
+        },
+        "additionalProperties": false,
+        "description": "The health of the service."
+      },
+      "HttpStatusCode": {
+        "enum": [
+          "Continue",
+          "SwitchingProtocols",
+          "Processing",
+          "EarlyHints",
+          "OK",
+          "Created",
+          "Accepted",
+          "NonAuthoritativeInformation",
+          "NoContent",
+          "ResetContent",
+          "PartialContent",
+          "MultiStatus",
+          "AlreadyReported",
+          "IMUsed",
+          "MultipleChoices",
+          "MovedPermanently",
+          "Found",
+          "SeeOther",
+          "NotModified",
+          "UseProxy",
+          "Unused",
+          "TemporaryRedirect",
+          "PermanentRedirect",
+          "BadRequest",
+          "Unauthorized",
+          "PaymentRequired",
+          "Forbidden",
+          "NotFound",
+          "MethodNotAllowed",
+          "NotAcceptable",
+          "ProxyAuthenticationRequired",
+          "RequestTimeout",
+          "Conflict",
+          "Gone",
+          "LengthRequired",
+          "PreconditionFailed",
+          "RequestEntityTooLarge",
+          "RequestUriTooLong",
+          "UnsupportedMediaType",
+          "RequestedRangeNotSatisfiable",
+          "ExpectationFailed",
+          "MisdirectedRequest",
+          "UnprocessableEntity",
+          "Locked",
+          "FailedDependency",
+          "UpgradeRequired",
+          "PreconditionRequired",
+          "TooManyRequests",
+          "RequestHeaderFieldsTooLarge",
+          "UnavailableForLegalReasons",
+          "InternalServerError",
+          "NotImplemented",
+          "BadGateway",
+          "ServiceUnavailable",
+          "GatewayTimeout",
+          "HttpVersionNotSupported",
+          "VariantAlsoNegotiates",
+          "InsufficientStorage",
+          "LoopDetected",
+          "NotExtended",
+          "NetworkAuthenticationRequired"
+        ],
+        "type": "string"
+      },
+      "JsonNode": {
+        "type": "object",
+        "properties": {
+          "options": {
+            "$ref": "#/components/schemas/JsonNodeOptions"
+          },
+          "parent": {
+            "$ref": "#/components/schemas/JsonNode"
+          },
+          "root": {
+            "$ref": "#/components/schemas/JsonNode"
+          }
+        },
+        "additionalProperties": false
+      },
+      "JsonNodeOptions": {
+        "type": "object",
+        "properties": {
+          "propertyNameCaseInsensitive": {
+            "type": "boolean"
+          }
+        },
+        "additionalProperties": false
+      },
+      "MaterialModel": {
+        "type": "object",
+        "properties": {
+          "modelName": {
+            "type": "string",
+            "description": "The model name."
+          },
+          "modelId": {
+            "type": "string",
+            "description": "The model ID."
+          },
+          "constraints": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ModelConstraint"
+            },
+            "description": "The constraints that were used to generate this model."
+          },
+          "properties": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ModelProperty"
+            },
+            "description": "Properties containing the model values."
+          },
+          "notes": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Warnings or errors regarding this model.",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "Contains the output data."
+      },
+      "MaterialModelDefinition": {
+        "required": [
+          "id",
+          "name"
+        ],
+        "type": "object",
+        "properties": {
+          "variant": {
+            "type": "string",
+            "description": "Variant",
+            "nullable": true
+          },
+          "properties": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Property"
+            },
+            "description": "Properties to include in the output.",
+            "nullable": true
+          },
+          "constraints": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Constraint"
+            },
+            "description": "Constraints to limit parameters to a specific value.",
+            "nullable": true
+          },
+          "restrictedToPackages": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Package"
+            },
+            "description": "Packages this MMD applies to. If null/empty, this MMD applies to all packages.",
+            "nullable": true
+          },
+          "consolidatePropertiesThatHaveParameters": {
+            "type": "boolean",
+            "description": "If true, all properties that have free parameters will be consolidated into a single property in the output. In this case, it is not valid for properties to have\r\ndifferent sets of free parameters (except for properties with no free parameters at all). If false, all properties will be kept separate in the output."
+          },
+          "id": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "name": {
+            "minLength": 1,
+            "type": "string"
+          }
+        },
+        "additionalProperties": false,
+        "description": "A material model definition (MMD) defines the structure of material models."
+      },
+      "MaterialModelDefinitionCreatedResponse": {
+        "type": "object",
+        "properties": {
+          "modelDefinition": {
+            "$ref": "#/components/schemas/MaterialModelDefinition"
+          },
+          "warnings": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/AdditionalInformation"
+            },
+            "description": "Warnings raised when creating the MMD",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "MMD created response"
+      },
+      "MaterialModelDefinitionResolvedAttributesResponse": {
+        "type": "object",
+        "properties": {
+          "databaseKey": {
+            "type": "string"
+          },
+          "modelDefinitions": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ResolvedModelAttributes"
+            }
+          }
+        },
+        "additionalProperties": false,
+        "description": "Resolved model attributes response"
+      },
+      "MiDatabaseInfo": {
+        "type": "object",
+        "properties": {
+          "key": {
+            "type": "string",
+            "description": "The database key."
+          },
+          "name": {
+            "type": "string",
+            "description": "The database name."
+          }
+        },
+        "additionalProperties": false,
+        "description": "Database information."
+      },
+      "MiTableAccessState": {
+        "enum": [
+          "Accessible",
+          "NotFound",
+          "Unlicensed",
+          "Unknown"
+        ],
+        "type": "string",
+        "description": "Table access states"
+      },
+      "MiTableIdentifier": {
+        "type": "object",
+        "properties": {
+          "tableGuid": {
+            "type": "string",
+            "description": "The table's GUID.",
+            "format": "uuid",
+            "example": "0000dd92-0011-4fff-8fff-0000ffff0000"
+          },
+          "databaseKey": {
+            "type": "string",
+            "description": "The DB key for the database that contains the table.",
+            "example": "MI_Starter_Data"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Identifies a table in MI."
+      },
+      "MiTableInfo": {
+        "type": "object",
+        "properties": {
+          "tableGuid": {
+            "type": "string",
+            "description": "The table's GUID.",
+            "format": "uuid"
+          },
+          "tableName": {
+            "type": "string",
+            "description": "The table's name.",
+            "nullable": true
+          },
+          "databaseKey": {
+            "type": "string",
+            "description": "The DB key of the database the table is in."
+          },
+          "accessState": {
+            "$ref": "#/components/schemas/MiTableAccessState"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Table info"
+      },
+      "ModelColumn": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "The column name."
+          },
+          "symbol": {
+            "type": "string",
+            "description": "The column symbol."
+          },
+          "unit": {
+            "type": "string",
+            "description": "The unit for the values in the column. Will be null if the values are dimensionless.",
+            "nullable": true
+          },
+          "isFreeParameter": {
+            "type": "boolean",
+            "description": "Indicates if the column represents a parameter, or a property (i.e. is a dependent variable)."
+          },
+          "numericValues": {
+            "type": "array",
+            "items": {
+              "type": "number",
+              "format": "double"
+            },
+            "description": "The values for this column if it contains numbers.",
+            "nullable": true
+          },
+          "stringValues": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "The values for this column if it contains discrete values.",
+            "nullable": true
+          },
+          "implicitConstraints": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ModelConstraint"
+            },
+            "description": "Implicit constraints are used if a used attribute has a parameter that is not listed either as a free parameter or a constraint in the MMD\r\n- a constraint value is automatically chosen based on the data.",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "Column definition for a column in the output table."
+      },
+      "ModelConstraint": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "The name of the parameter that was constrained."
+          },
+          "numericValue": {
+            "type": "number",
+            "description": "The constraint numeric value.",
+            "format": "double",
+            "nullable": true
+          },
+          "unit": {
+            "type": "string",
+            "description": "The unit of the constraint value.",
+            "nullable": true
+          },
+          "stringValue": {
+            "type": "string",
+            "description": "The constraint string value.",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "A constraint that was used to generate the model."
+      },
+      "ModelExportIssues": {
+        "type": "object",
+        "properties": {
+          "missingRecordHistoryGuids": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "description": "Record history GUIDs that were requested but not found in any database.",
+            "nullable": true
+          },
+          "missingMmds": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "MMD IDs that were requested but do not exist.",
+            "nullable": true
+          },
+          "mmdsWithMissingUserConstraints": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "description": "MMD IDs that require user constraints that were not supplied in the export request.",
+            "nullable": true
+          },
+          "unresolvedMmds": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "description": "MMDs that were found but could not be resolved, returned as a dictionary of MMD IDs and the reasons they could not be resolved.",
+            "nullable": true
+          },
+          "otherMessages": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Any other issues that occurred for the export.",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "Information about any issues that occurred for this export."
+      },
+      "ModelExportRequest": {
+        "type": "object",
+        "properties": {
+          "recordHistoryGuids": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "description": "Record history GUIDs to export."
+          },
+          "databaseKey": {
+            "type": "string",
+            "description": "The database to export from."
+          },
+          "mmdIds": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "MMD IDs to export. If none are specified, all available MMDs will be exported.",
+            "nullable": true
+          },
+          "constraintValues": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ConstraintValue"
+            },
+            "description": "Constraint values for MMDs with user defined constraints.",
+            "nullable": true
+          },
+          "unitSystem": {
+            "type": "string",
+            "description": "The name of the unit system (e.g. metric) to export values in.",
+            "nullable": true
+          },
+          "useAbsoluteUnits": {
+            "type": "boolean",
+            "description": "Use absolute units (e.g. K or °R) instead of relative units (e.g. °C or °F). Defaults to false if not specified.",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "Request object for exporting material models."
+      },
+      "ModelExportResponse": {
+        "type": "object",
+        "properties": {
+          "materials": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ExportMaterial"
+            },
+            "description": "The exported materials."
+          },
+          "issues": {
+            "$ref": "#/components/schemas/ModelExportIssues"
+          }
+        },
+        "additionalProperties": false,
+        "description": "A response to a model export request."
+      },
+      "ModelProperty": {
+        "required": [
+          "name"
+        ],
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "The name of the property."
+          },
+          "symbol": {
+            "type": "string",
+            "description": "A short symbol for the property.",
+            "nullable": true
+          },
+          "unit": {
+            "type": "string",
+            "description": "The unit for the numeric value.",
+            "nullable": true
+          },
+          "numericValue": {
+            "type": "number",
+            "description": "The numerical value for the property.",
+            "format": "double",
+            "nullable": true
+          },
+          "stringValue": {
+            "type": "string",
+            "description": "The string value for the property.",
+            "nullable": true
+          },
+          "boolValue": {
+            "type": "boolean",
+            "description": "The bool value for the property.",
+            "nullable": true
+          },
+          "columns": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ModelColumn"
+            },
+            "description": "Columns containing details and values for the property.",
+            "nullable": true
+          },
+          "implicitConstraints": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ModelConstraint"
+            },
+            "description": "Implicit constraints are used if a used attribute has a parameter that is not listed either as a free parameter or a constraint in the MMD\r\n- a constraint value is automatically chosen based on the data.",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "Contains details and value(s) for an individual model property."
+      },
+      "Package": {
+        "required": [
+          "name"
+        ],
+        "type": "object",
+        "properties": {
+          "name": {
+            "minLength": 1,
+            "type": "string",
+            "description": "The package name."
+          },
+          "modelName": {
+            "type": "string",
+            "description": "The name of the model as it should appear in this package. If not specified, the generic model name is used.",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "A software package name, used to filter for relevant MMDs."
+      },
+      "PaginationLinks": {
+        "type": "object",
+        "properties": {
+          "next": {
+            "type": "string",
+            "description": "Link for the next page of results. Will be null if this is the last page.",
+            "nullable": true
+          },
+          "prev": {
+            "type": "string",
+            "description": "Link for the previous page of results. Will be null if this is the first page.",
+            "nullable": true
+          },
+          "first": {
+            "type": "string",
+            "description": "Link for the first page of results.",
+            "nullable": true
+          },
+          "last": {
+            "type": "string",
+            "description": "Link for the last page of results.",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "Pagination links"
+      },
+      "Parameter": {
+        "required": [
+          "standardName",
+          "symbol"
+        ],
+        "type": "object",
+        "properties": {
+          "standardName": {
+            "minLength": 1,
+            "type": "string",
+            "description": "The Standard Name of the parameter."
+          },
+          "symbol": {
+            "minLength": 1,
+            "type": "string",
+            "description": "The parameter's symbol."
+          }
+        },
+        "additionalProperties": false,
+        "description": "A parameter for multi-valued data."
+      },
+      "Property": {
+        "required": [
+          "attributes",
+          "name"
+        ],
+        "type": "object",
+        "properties": {
+          "name": {
+            "minLength": 1,
+            "type": "string",
+            "description": "The property name to display in the model output."
+          },
+          "symbol": {
+            "type": "string",
+            "description": "An optional symbol to include in the model output.",
+            "nullable": true
+          },
+          "columnName": {
+            "type": "string",
+            "description": "Optional name to display in the model output for the column containing the dependent (y-axis) data for this property.",
+            "nullable": true
+          },
+          "attributes": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Attribute"
+            },
+            "description": "Source attributes for this property. If multiple attributes are defined, the first that exists and has data will be used."
+          },
+          "freeParameters": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Parameter"
+            },
+            "description": "Free parameters are included in the output.",
+            "nullable": true
+          },
+          "optional": {
+            "type": "boolean",
+            "description": "Indicate if a property is optional (defaults to false).\n\r\nIf a property cannot be resolved and it is not optional, it will cause the export to fail. If the property is optional, it will be omitted from the output."
+          },
+          "rangeValueToUse": {
+            "$ref": "#/components/schemas/RangeValueToUse"
+          }
+        },
+        "additionalProperties": false,
+        "description": "A property to include in the model output."
+      },
+      "RangeValueToUse": {
+        "enum": [
+          "GeometricMean",
+          "ArithmeticMean",
+          "Minimum",
+          "Maximum"
+        ],
+        "type": "string",
+        "description": "Specifies how to produce a single value from a range. Defaults to geometric mean."
+      },
+      "Record": {
+        "type": "object",
+        "properties": {
+          "databaseKey": {
+            "type": "string",
+            "description": "The record's database key."
+          },
+          "guid": {
+            "type": "string",
+            "description": "The record's GUID.",
+            "format": "uuid",
+            "nullable": true
+          },
+          "name": {
+            "type": "string",
+            "description": "The record's name.",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "A specific record returned from a search."
+      },
+      "RecordSearchCriteriaResponse": {
+        "type": "object",
+        "properties": {
+          "criteriaByDatabaseKey": {
+            "type": "object",
+            "additionalProperties": {
+              "$ref": "#/components/schemas/GsaCriterion"
+            },
+            "description": "The criteria. Performing a search with these criteria will return records applicable to the requested MMD(s)."
+          }
+        },
+        "additionalProperties": false,
+        "description": "Record search criteria response"
+      },
+      "RecordSearchRequest": {
+        "type": "object",
+        "properties": {
+          "materialModelDefinitionIds": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "The MMD IDs to search for records for."
+          }
+        },
+        "additionalProperties": false,
+        "description": "Object for making record search requests."
+      },
+      "RecordSearchResponse": {
+        "type": "object",
+        "properties": {
+          "records": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Record"
+            },
+            "description": "The returned records."
+          }
+        },
+        "additionalProperties": false,
+        "description": "Record search response"
+      },
+      "ResolvedAttribute": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "guid": {
+            "type": "string",
+            "format": "uuid"
+          }
+        },
+        "additionalProperties": false,
+        "description": "A resolved attribute."
+      },
+      "ResolvedModelAttributes": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "resolvedAttributes": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ResolvedOutput"
+            }
+          }
+        },
+        "additionalProperties": false,
+        "description": "Resolved attributes for a particular model."
+      },
+      "ResolvedOutput": {
+        "type": "object",
+        "properties": {
+          "propertyName": {
+            "type": "string",
+            "nullable": true
+          },
+          "attributes": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ResolvedAttribute"
+            }
+          }
+        },
+        "additionalProperties": false,
+        "description": "Resolved attributes for a property."
+      },
+      "WhoAmIResponse": {
+        "type": "object",
+        "properties": {
+          "userName": {
+            "type": "string",
+            "description": "The current user's username."
+          }
+        },
+        "additionalProperties": false,
+        "description": "Response for the whoami endpoint."
+      }
+    }
+  }
+}
