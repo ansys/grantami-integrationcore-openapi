@@ -27,6 +27,7 @@ env:
   MAIN_PYTHON_VERSION: '3.13'
   LIBRARY_NAME: 'ansys-grantami-connectedmaterials-openapi'
   PYANSYS_PYPI_UPLOAD_URL: https://pkgs.dev.azure.com/pyansys/_packaging/pyansys/pypi/upload
+  PYANSYS_PYPI_INDEX_URL: https://pkgs.dev.azure.com/pyansys/_packaging/pyansys/pypi/simple/
 
 jobs:
   tests:
@@ -118,11 +119,25 @@ jobs:
           name: ${{ env.LIBRARY_NAME }}-artifacts
           path: ${{ env.LIBRARY_NAME }}-artifacts
 
+      - name: "Configure authenticated check URL"
+        env:
+          UV_PUBLISH_TOKEN: ${{ secrets.PYANSYS_PYPI_PRIVATE_PAT }}
+        run: |
+          INDEX_HOST="${{ env.PYANSYS_PYPI_INDEX_URL }}"
+          INDEX_HOST="${INDEX_HOST#https://}"
+          echo "UV_PUBLISH_CHECK_URL=https://__token__:${UV_PUBLISH_TOKEN}@${INDEX_HOST}" >> "$GITHUB_ENV"
+
+      - name: "Check for existing distributions on private PyPI"
+        env:
+          UV_PUBLISH_TOKEN: ${{ secrets.PYANSYS_PYPI_PRIVATE_PAT }}
+          UV_PUBLISH_URL: ${{ env.PYANSYS_PYPI_UPLOAD_URL }}
+        run: uv publish --dry-run --no-attestations ${{ env.LIBRARY_NAME }}-artifacts/*
+
       - name: "Release to private PyPI"
         env:
           UV_PUBLISH_TOKEN: ${{ secrets.PYANSYS_PYPI_PRIVATE_PAT }}
           UV_PUBLISH_URL: ${{ env.PYANSYS_PYPI_UPLOAD_URL }}
-        run: uv publish --skip-existing --no-attestations ${{ env.LIBRARY_NAME }}-artifacts/*
+        run: uv publish --no-attestations ${{ env.LIBRARY_NAME }}-artifacts/*
 
   release:
     name: "Release"
@@ -148,11 +163,25 @@ jobs:
       - name: "Upload artifacts to PyPI using trusted publisher"
         run: uv publish ${{ env.LIBRARY_NAME }}-artifacts/*
 
+      - name: "Configure authenticated check URL"
+        env:
+          UV_PUBLISH_TOKEN: ${{ secrets.PYANSYS_PYPI_PRIVATE_PAT }}
+        run: |
+          INDEX_HOST="${{ env.PYANSYS_PYPI_INDEX_URL }}"
+          INDEX_HOST="${INDEX_HOST#https://}"
+          echo "UV_PUBLISH_CHECK_URL=https://__token__:${UV_PUBLISH_TOKEN}@${INDEX_HOST}" >> "$GITHUB_ENV"
+
+      - name: "Check for existing distributions on private PyPI"
+        env:
+          UV_PUBLISH_TOKEN: ${{ secrets.PYANSYS_PYPI_PRIVATE_PAT }}
+          UV_PUBLISH_URL: ${{ env.PYANSYS_PYPI_UPLOAD_URL }}
+        run: uv publish --dry-run --no-attestations ${{ env.LIBRARY_NAME }}-artifacts/*
+
       - name: "Release to private PyPI"
         env:
           UV_PUBLISH_TOKEN: ${{ secrets.PYANSYS_PYPI_PRIVATE_PAT }}
           UV_PUBLISH_URL: ${{ env.PYANSYS_PYPI_UPLOAD_URL }}
-        run: uv publish --skip-existing --no-attestations ${{ env.LIBRARY_NAME }}-artifacts/*
+        run: uv publish --no-attestations ${{ env.LIBRARY_NAME }}-artifacts/*
 
       - name: "Release to GitHub"
         uses: softprops/action-gh-release@a06a81a03ee405af7f2048a818ed3f03bbf83c7b  #v2.5.0
