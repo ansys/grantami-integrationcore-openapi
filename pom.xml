@@ -4,7 +4,7 @@
   <artifactId>grantami-connectedmaterials-openapi</artifactId>
   <version>0.1.0</version>
   <packaging>jar</packaging>
-  <name>Granta MI Connected Materials</name>
+  <name>Granta MI Connected Materials API Client</name>
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
