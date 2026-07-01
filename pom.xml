@@ -2,7 +2,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.ansys</groupId>
   <artifactId>grantami-connectedmaterials-openapi</artifactId>
-  <version>1.0.0</version>
+  <version>0.1.0</version>
   <packaging>jar</packaging>
   <name>Granta MI Connected Materials</name>
 
