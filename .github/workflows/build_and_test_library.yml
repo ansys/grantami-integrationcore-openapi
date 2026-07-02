@@ -112,6 +112,8 @@ jobs:
         uses: astral-sh/setup-uv@61cb8a9741eeb8a550a1b8544337180c0fc8476b  # v7.2.0
         with:
           python-version: ${{ env.MAIN_PYTHON_VERSION }}
+          ignore-empty-workdir: "true"
+          ignore-nothing-to-cache: "true"
 
       - name: "Download the library artifacts from build-library step"
         uses: actions/download-artifact@37930b1c2abaa49bbe596cd826c3c89aef350131  # v7.0.0
@@ -153,6 +155,8 @@ jobs:
         uses: astral-sh/setup-uv@61cb8a9741eeb8a550a1b8544337180c0fc8476b  # v7.2.0
         with:
           python-version: ${{ env.MAIN_PYTHON_VERSION }}
+          ignore-empty-workdir: "true"
+          ignore-nothing-to-cache: "true"
 
       - name: "Download the library artifacts from build-library step"
         uses: actions/download-artifact@37930b1c2abaa49bbe596cd826c3c89aef350131  # v7.0.0
