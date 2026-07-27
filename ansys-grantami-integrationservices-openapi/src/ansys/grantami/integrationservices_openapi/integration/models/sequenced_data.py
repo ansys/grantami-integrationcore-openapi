@@ -12,7 +12,7 @@ import re  # noqa: F401
 from typing import TYPE_CHECKING, Any, BinaryIO, Optional  # noqa: F401
 
 from . import ModelBase, Unset, Unset_Type
-from ansys.grantami.connectedmaterials_openapi.integration.models.data import Data  # noqa: F401
+from ansys.grantami.integrationservices_openapi.integration.models.data import Data  # noqa: F401
 
 
 if TYPE_CHECKING:
