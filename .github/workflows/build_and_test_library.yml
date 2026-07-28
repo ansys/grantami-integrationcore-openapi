@@ -14,18 +14,18 @@ on:
     tags:
       - "*"
     paths:
-      - "ansys-grantami-connectedmaterials-openapi/**"
+      - "ansys-grantami-integrationservices-openapi/**"
       - ".github/workflows/build_and_test_library.yml"
   pull_request:
     paths:
-      - "ansys-grantami-connectedmaterials-openapi/**"
+      - "ansys-grantami-integrationservices-openapi/**"
       - ".github/workflows/build_and_test_library.yml"
 
 permissions: {}
 
 env:
   MAIN_PYTHON_VERSION: '3.13'
-  LIBRARY_NAME: 'ansys-grantami-connectedmaterials-openapi'
+  LIBRARY_NAME: 'ansys-grantami-integrationservices-openapi'
   PYANSYS_PYPI_UPLOAD_URL: https://pkgs.dev.azure.com/pyansys/_packaging/pyansys/pypi/upload
   PYANSYS_PYPI_INDEX_URL: https://pkgs.dev.azure.com/pyansys/_packaging/pyansys/pypi/simple/
 

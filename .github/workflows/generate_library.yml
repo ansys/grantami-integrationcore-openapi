@@ -32,7 +32,7 @@ jobs:
 
     - name: "Clean library folder"
       run: find . ! -name 'uv.lock' -type f -exec rm -f {} +
-      working-directory: ansys-grantami-connectedmaterials-openapi
+      working-directory: ansys-grantami-integrationservices-openapi
 
     - name: "Build client library"
       run: mvn -Dbuild-id=${{ github.run_number }} ${{ env.IS_RELEASE_BRANCH == 'true' && '-Dis-release' || '' }} -s .m2/settings.xml compile
@@ -49,19 +49,19 @@ jobs:
     - name: "Ensure uv.lock file is up to date"
       run: |
         uv lock
-      working-directory: ansys-grantami-connectedmaterials-openapi
+      working-directory: ansys-grantami-integrationservices-openapi
 
     - name: "Install and run pre-commit"
       run: |
         uv tool install pre-commit
-        git add ansys-grantami-connectedmaterials-openapi/
+        git add ansys-grantami-integrationservices-openapi/
         ! pre-commit run --all-files
 
     - name: "Commit changes to library code"
       run: |
         git config user.name 'GitHub Actions'
         git config user.email 'actions@github.com'
-        git add ansys-grantami-connectedmaterials-openapi
+        git add ansys-grantami-integrationservices-openapi
         if ! git diff --staged --quiet; then
           git commit -m 'Generate Client Library code - Automated'
           git push
