@@ -16,10 +16,12 @@ on:
     paths:
       - "ansys-grantami-integrationservices-openapi/**"
       - ".github/workflows/build_and_test_library.yml"
+      - "README.md"
   pull_request:
     paths:
       - "ansys-grantami-integrationservices-openapi/**"
       - ".github/workflows/build_and_test_library.yml"
+      - "README.md"
 
 permissions: {}
 
