@@ -28,4 +28,5 @@ repos:
     - id: add-license-headers
       args:
       - --start_year=2026
+      - --custom_license=Apache-2.0
       files: 'ansys-grantami-integrationscore-openapi/(src|tests)/.*\.(py)'
