@@ -1,14 +1,20 @@
+# Copyright (C) 2026 - 2026 ANSYS, Inc. and/or its affiliates.
+# SPDX-License-Identifier: Apache-2.0
+
 from enum import Enum
 import types
-import pytest
-import ansys.grantami.integrationscore_openapi.integration.models as models
 
+import ansys.grantami.integrationscore_openapi.integration.models as models
+import pytest
 
 ALL_MODELS = {
-    k: v for k, v in models.__dict__.items()
+    k: v
+    for k, v in models.__dict__.items()
     if isinstance(v, type) and k not in ("ModelBase", "Unset_Type") and not issubclass(v, Enum)
 }
-POLYMORPHIC_MODELS = {k: v for k, v in ALL_MODELS.items() if "discriminator_value_class_map" in v.__dict__}
+POLYMORPHIC_MODELS = {
+    k: v for k, v in ALL_MODELS.items() if "discriminator_value_class_map" in v.__dict__
+}
 MONOMORPHIC_MODELS = {k: v for k, v in ALL_MODELS.items() if k not in POLYMORPHIC_MODELS.keys()}
 
 
