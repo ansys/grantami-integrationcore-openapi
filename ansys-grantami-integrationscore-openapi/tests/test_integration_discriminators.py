@@ -4,7 +4,7 @@
 from enum import Enum
 import types
 
-import ansys.grantami.integrationscore_openapi.integration.models as models
+import ansys.grantami.integrationcore_openapi.integration.models as models
 import pytest
 
 ALL_MODELS = {

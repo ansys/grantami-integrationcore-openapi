@@ -7,7 +7,7 @@ resolution-markers = [
 ]
 
 [[package]]
-name = "ansys-grantami-integrationscore-openapi"
+name = "ansys-grantami-integrationcore-openapi"
 version = "0.1.0.dev23"
 source = { editable = "." }
 dependencies = [
