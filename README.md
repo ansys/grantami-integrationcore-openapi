@@ -1,9 +1,9 @@
 # PyGranta Integration Services
 
 [![PyAnsys](https://img.shields.io/badge/Py-Ansys-ffc107.svg?labelColor=black&logo=data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAIAAACQkWg2AAABDklEQVQ4jWNgoDfg5mD8vE7q/3bpVyskbW0sMRUwofHD7Dh5OBkZGBgW7/3W2tZpa2tLQEOyOzeEsfumlK2tbVpaGj4N6jIs1lpsDAwMJ278sveMY2BgCA0NFRISwqkhyQ1q/Nyd3zg4OBgYGNjZ2ePi4rB5loGBhZnhxTLJ/9ulv26Q4uVk1NXV/f///////69du4Zdg78lx//t0v+3S88rFISInD59GqIH2esIJ8G9O2/XVwhjzpw5EAam1xkkBJn/bJX+v1365hxxuCAfH9+3b9/+////48cPuNehNsS7cDEzMTAwMMzb+Q2u4dOnT2vWrMHu9ZtzxP9vl/69RVpCkBlZ3N7enoDXBwEAAA+YYitOilMVAAAAAElFTkSuQmCC)](https://docs.pyansys.com/)
-[![python](https://img.shields.io/pypi/pyversions/ansys-grantami-integrationscore-openapi?logo=pypi)](https://pypi.org/project/ansys-grantami-integrationscore-openapi/)
-[![pypi](https://img.shields.io/pypi/v/ansys-grantami-integrationscore-openapi.svg?logo=python&logoColor=white)](https://pypi.org/project/ansys-grantami-integrationscore-openapi/)
-[![GH-CI](https://github.com/ansys-internal/grantami-integrationscore-openapi/actions/workflows/build_and_test_library.yml/badge.svg)](https://github.com/ansys/grantami-integrationscore-openapi/actions/workflows/build_and_test_library.yml)
+[![python](https://img.shields.io/pypi/pyversions/ansys-grantami-integrationcore-openapi?logo=pypi)](https://pypi.org/project/ansys-grantami-integrationcore-openapi/)
+[![pypi](https://img.shields.io/pypi/v/ansys-grantami-integrationcore-openapi.svg?logo=python&logoColor=white)](https://pypi.org/project/ansys-grantami-integrationcore-openapi/)
+[![GH-CI](https://github.com/ansys-internal/grantami-integrationcore-openapi/actions/workflows/build_and_test_library.yml/badge.svg)](https://github.com/ansys/grantami-integrationcore-openapi/actions/workflows/build_and_test_library.yml)
 [![MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 
@@ -52,7 +52,7 @@ Once the tag is pushed to GitHub, a workflow will build and publish the release.
 
 ## Using this package
 
-The `ansys-grantami-integrationscore-openapi` package provides low-level bindings for the
+The `ansys-grantami-integrationcore-openapi` package provides low-level bindings for the
 Integration Services APIs. Each API is exposed as a separate submodule within the same installable
 package.
 
@@ -63,18 +63,18 @@ documentation. To use the most up-to-date version of this package in another pro
 dependency on the repository's main branch, e.g. with uv:
 
 ```console
-uv add git+https://github.com/ansys-internal/grantami-integrationscore-openapi#subdirectory=ansys-grantami-integrationscore-openapi
+uv add git+https://github.com/ansys-internal/grantami-integrationcore-openapi#subdirectory=ansys-grantami-integrationcore-openapi
 ```
 
 Or with pip:
 
 ```console
-pip install git+https://github.com/ansys-internal/grantami-integrationscore-openapi.git#subdirectory=ansys-grantami-integrationscore-openapi
+pip install git+https://github.com/ansys-internal/grantami-integrationcore-openapi.git#subdirectory=ansys-grantami-integrationcore-openapi
 ```
 
 ### Package structure
 
-Both APIs share the top-level import path `ansys.grantami.integrationscore_openapi` but are
+Both APIs share the top-level import path `ansys.grantami.integrationcore_openapi` but are
 generated into separate submodules:
 
 | Submodule | OpenAPI definition | Purpose |
@@ -85,10 +85,10 @@ generated into separate submodules:
 Import API classes and models from the submodule that matches the service you are calling:
 
 ```python
-from ansys.grantami.integrationscore_openapi.material_models import api as mms_api
-from ansys.grantami.integrationscore_openapi.material_models import models as mms_models
-from ansys.grantami.integrationscore_openapi.integration import api as integration_api
-from ansys.grantami.integrationscore_openapi.integration import models as integration_models
+from ansys.grantami.integrationcore_openapi.material_models import api as mms_api
+from ansys.grantami.integrationcore_openapi.material_models import models as mms_models
+from ansys.grantami.integrationcore_openapi.integration import api as integration_api
+from ansys.grantami.integrationcore_openapi.integration import models as integration_models
 ```
 
 Each service has its own base URL. Create a separate `ApiClient` for each service and call
@@ -103,14 +103,14 @@ authentication method for your environment.
 from importlib.metadata import version
 
 from ansys.openapi.common import ApiClient, ApiClientFactory, generate_user_agent
-from ansys.grantami.integrationscore_openapi.material_models import api as mms_api
-from ansys.grantami.integrationscore_openapi.material_models import models as mms_models
-from ansys.grantami.integrationscore_openapi.integration import api as integration_api
-from ansys.grantami.integrationscore_openapi.integration import models as integration_models
-from ansys.grantami.integrationscore_openapi.integration.models import SessionRequest, SessionSettings
+from ansys.grantami.integrationcore_openapi.material_models import api as mms_api
+from ansys.grantami.integrationcore_openapi.material_models import models as mms_models
+from ansys.grantami.integrationcore_openapi.integration import api as integration_api
+from ansys.grantami.integrationcore_openapi.integration import models as integration_models
+from ansys.grantami.integrationcore_openapi.integration.models import SessionRequest, SessionSettings
 
-PACKAGE_NAME = "ansys-grantami-integrationscore-openapi"
-GRANTA_APPLICATION_NAME_HEADER = "PyGranta Integration Services"
+PACKAGE_NAME = "ansys-grantami-integrationcore-openapi"
+GRANTA_APPLICATION_NAME_HEADER = "PyGranta Integration Core"
 
 MMS_API_URL = "https://my-server/material-model-service"
 INTEGRATION_API_URL = "https://my-server/integration-service/api/v1"

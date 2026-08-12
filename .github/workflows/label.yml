@@ -45,8 +45,8 @@ jobs:
         issue-number: ${{ github.event.pull_request.number }}
         body: |
           Please add one of the following labels to add this contribution to the Release Notes :point_down:
-          - [api-definition](https://github.com/ansys/grantami-integrationscore-openapi/pulls?q=label%3Aapi-definition)
-          - [code-gen](https://github.com/ansys/grantami-integrationscore-openapi/pulls?q=label%3Acode-gen+)
-          - [enhancement](https://github.com/ansys/grantami-integrationscore-openapi/pulls?q=label%3Aenhancement+)
-          - [maintenance](https://github.com/ansys/grantami-integrationscore-openapi/pulls?q=label%3Amaintenance+)
-          - [bug](https://github.com/ansys/grantami-integrationscore-openapi/pulls?q=label%3Abug+)
+          - [api-definition](https://github.com/ansys/grantami-integrationcore-openapi/pulls?q=label%3Aapi-definition)
+          - [code-gen](https://github.com/ansys/grantami-integrationcore-openapi/pulls?q=label%3Acode-gen+)
+          - [enhancement](https://github.com/ansys/grantami-integrationcore-openapi/pulls?q=label%3Aenhancement+)
+          - [maintenance](https://github.com/ansys/grantami-integrationcore-openapi/pulls?q=label%3Amaintenance+)
+          - [bug](https://github.com/ansys/grantami-integrationcore-openapi/pulls?q=label%3Abug+)
