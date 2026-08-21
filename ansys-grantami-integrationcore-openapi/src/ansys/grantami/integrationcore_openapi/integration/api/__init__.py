@@ -14,6 +14,9 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+# flake8: noqa
+
+# import API ABC
 from ansys.openapi.common import ApiBase
 
 # import apis into api package
