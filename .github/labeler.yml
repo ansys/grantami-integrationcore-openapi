@@ -1,19 +1,20 @@
+api-definition:
+- changed-files:
+  - any-glob-to-any-file: ['yaml/*']
+code-gen:
+- changed-files:
+  - any-glob-to-any-file: ['pom.xml']
 documentation:
 - changed-files:
   - any-glob-to-any-file: ['doc/source/**/*', 'examples/**/*']
-- head-branch: ['^doc/', '^docs/']
-
+enhancement:
+- head-branch: ['^feat/']
+bug:
+- head-branch: ['^fix/', '^patch/']
 maintenance:
 - changed-files:
   - any-glob-to-any-file: ['.github/**/*', '.flake8', 'pyproject.toml']
 - head-branch: ['^maint/', '^ci/', '^no-ci/']
-
-enhancement:
-- head-branch: ['^feat/']
-
-bug:
-- head-branch: ['^fix/', '^patch/']
-
 dependencies:
 - changed-files:
-  - any-glob-to-any-file: ['poetry.lock']
+  - any-glob-to-any-file: ['uv.lock']
