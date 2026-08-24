@@ -4,7 +4,7 @@
 [![python](https://img.shields.io/pypi/pyversions/ansys-grantami-integrationcore-openapi?logo=pypi)](https://pypi.org/project/ansys-grantami-integrationcore-openapi/)
 [![pypi](https://img.shields.io/pypi/v/ansys-grantami-integrationcore-openapi.svg?logo=python&logoColor=white)](https://pypi.org/project/ansys-grantami-integrationcore-openapi/)
 [![GH-CI](https://github.com/ansys-internal/grantami-integrationcore-openapi/actions/workflows/build_and_test_library.yml/badge.svg)](https://github.com/ansys/grantami-integrationcore-openapi/actions/workflows/build_and_test_library.yml)
-[![MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Apache-2.0](https://img.shields.io/badge/License-Apache2.0-yellow.svg)](https://opensource.org/license/Apache-2.0)
 
 
 ## Project Overview
@@ -55,6 +55,10 @@ Once the tag is pushed to GitHub, a workflow will build and publish the release.
 The `ansys-grantami-integrationcore-openapi` package provides low-level bindings for the
 Integration Services APIs. Each API is exposed as a separate submodule within the same installable
 package.
+
+### Requirements
+
+The `ansys-grantami-integrationcore-openapi` package requires Granta MI 2027 R1 or later.
 
 ### Installation
 
