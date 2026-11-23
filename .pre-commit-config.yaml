@@ -1,12 +1,7 @@
-ci:
-    autofix_commit_msg: 'chore: auto fixes from pre-commit hooks'
-    autoupdate_commit_msg: 'chore: pre-commit automatic update'
-    autoupdate_schedule: weekly
-
 repos:
 
 - repo: https://github.com/psf/black-pre-commit-mirror
-  rev: 26.1.0
+  rev: a5439e9af2ff9371297bb1a76a01b8ad17989b88  # frozen: 26.10.1
   hooks:
   - id: black
     files: '^ansys-grantami-integrationcore-openapi/(src|tests)'
@@ -14,13 +9,13 @@ repos:
       - '--line-length=100'
 
 - repo: https://github.com/pycqa/isort
-  rev: 7.0.0
+  rev: eb62da318ea543b82340f3d0a52bc0509c7e626e  # frozen: 10.0.0b3
   hooks:
   - id: isort
     files: '^ansys-grantami-integrationcore-openapi/(src|tests)'
 
 - repo: https://github.com/pre-commit/pre-commit-hooks
-  rev: v6.0.0
+  rev: 3e8a8703264a2f4a69428a0aa4dcb512790b2c8c  # frozen: v6.0.0
   hooks:
   - id: check-yaml
   - id: debug-statements
@@ -28,7 +23,7 @@ repos:
   - id: trailing-whitespace
 
 - repo: https://github.com/ansys/pre-commit-hooks
-  rev: v0.8.0
+  rev: 5e97ca56e2fd5940a745fcba5b1fa6569198267f  # frozen: v0.8.3
   hooks:
     - id: add-license-headers
       args:
