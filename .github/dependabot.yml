@@ -1,4 +1,4 @@
- version: 2
+version: 2
 updates:
   - package-ecosystem: "pip"
     directory: "/"
@@ -26,8 +26,20 @@ updates:
       default-days: 7
     labels:
       - "maintenance"
-      - "dependencies"
     groups:
        actions:
           patterns:
             - "*"
+
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    cooldown:
+      default-days: 7
+    labels:
+      - "maintenance"
+    groups:
+      pre-commit-hooks:
+        patterns:
+          - "*"
