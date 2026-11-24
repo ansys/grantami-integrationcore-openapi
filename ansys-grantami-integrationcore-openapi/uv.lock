@@ -1,6 +1,6 @@
 version = 1
 revision = 5
-requires-python = ">=3.12, <4"
+requires-python = ">=3.12"
 resolution-markers = [
     "python_full_version >= '3.15'",
     "python_full_version < '3.15'",
@@ -8,7 +8,7 @@ resolution-markers = [
 
 [[package]]
 name = "ansys-grantami-integrationcore-openapi"
-version = "0.1.0.dev29"
+version = "0.1.0.dev36"
 source = { editable = "." }
 dependencies = [
     { name = "ansys-openapi-common" },
