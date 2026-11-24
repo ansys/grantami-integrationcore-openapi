@@ -31,7 +31,7 @@ updates:
           patterns:
             - "*"
 
-  - package-ecosystem: "github-actions"
+  - package-ecosystem: "pre-commit"
     directory: "/"
     schedule:
       interval: "weekly"
